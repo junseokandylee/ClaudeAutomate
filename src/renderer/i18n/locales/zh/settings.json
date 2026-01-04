@@ -1,0 +1,13 @@
+{
+  "title": "设置",
+  "general.title": "常规",
+  "general.language": "语言",
+  "general.theme": "主题",
+  "advanced.title": "高级",
+  "advanced.parallelSessions": "最大并行会话数",
+  "advanced.timeout": "超时",
+  "advanced.verbosity": "详细程度",
+  "about.title": "关于",
+  "about.version": "版本",
+  "about.license": "许可证"
+}

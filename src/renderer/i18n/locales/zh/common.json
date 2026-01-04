@@ -1,0 +1,17 @@
+{
+  "app.title": "ClaudeParallelRunner",
+  "app.description": "SPEC并行执行运行器",
+  "actions.start": "开始",
+  "actions.stop": "停止",
+  "actions.retry": "重试",
+  "actions.cancel": "取消",
+  "actions.save": "保存",
+  "actions.load": "加载",
+  "actions.refresh": "刷新",
+  "status.pending": "等待中",
+  "status.running": "运行中",
+  "status.completed": "已完成",
+  "status.failed": "失败",
+  "status.idle": "空闲",
+  "status.cancelled": "已取消"
+}

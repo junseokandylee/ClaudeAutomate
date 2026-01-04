@@ -1,0 +1,17 @@
+{
+  "app.title": "ClaudeParallelRunner",
+  "app.description": "SPEC 병렬 실행 러너",
+  "actions.start": "시작",
+  "actions.stop": "중지",
+  "actions.retry": "재시도",
+  "actions.cancel": "취소",
+  "actions.save": "저장",
+  "actions.load": "불러오기",
+  "actions.refresh": "새로고침",
+  "status.pending": "대기 중",
+  "status.running": "실행 중",
+  "status.completed": "완료됨",
+  "status.failed": "실패함",
+  "status.idle": "유휴",
+  "status.cancelled": "취소됨"
+}

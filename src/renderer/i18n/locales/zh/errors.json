@@ -1,0 +1,14 @@
+{
+  "bootstrap.claudeNotFound": "未找到Claude Code CLI",
+  "bootstrap.moaiAdkNotFound": "未找到MoAI-ADK框架",
+  "bootstrap.worktreeNotSupported": "不支持Git worktree",
+  "session.createFailed": "创建会话失败",
+  "session.startFailed": "启动会话失败",
+  "session.cancelFailed": "取消会话失败",
+  "worktree.createFailed": "创建worktree失败",
+  "worktree.removeFailed": "删除worktree失败",
+  "config.invalidPath": "无效的配置路径",
+  "config.invalidValue": "无效的配置值",
+  "analysis.parseFailed": "解析SPEC失败",
+  "analysis.dependencyCycle": "检测到依赖循环"
+}

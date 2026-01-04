@@ -1,0 +1,13 @@
+{
+  "title": "Settings",
+  "general.title": "General",
+  "general.language": "Language",
+  "general.theme": "Theme",
+  "advanced.title": "Advanced",
+  "advanced.parallelSessions": "Max Parallel Sessions",
+  "advanced.timeout": "Timeout",
+  "advanced.verbosity": "Verbosity",
+  "about.title": "About",
+  "about.version": "Version",
+  "about.license": "License"
+}

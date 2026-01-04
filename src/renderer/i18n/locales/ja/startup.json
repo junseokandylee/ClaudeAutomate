@@ -1,0 +1,15 @@
+{
+  "title": "ClaudeParallelRunner起動",
+  "subtitle": "MoAI-ADK SPEC並列実行ランナー",
+  "dependencies.title": "依存関係チェック",
+  "dependencies.checking": "依存関係を確認中...",
+  "dependencies.claude": "Claude Code CLI",
+  "dependencies.moaiAdk": "MoAI-ADKフレームワーク",
+  "dependencies.moaiWorktree": "Git Worktreeサポート",
+  "dependencies.allReady": "すべての依存関係が準備完了",
+  "status.ready": "開始準備完了",
+  "status.notReady": "準備未完了",
+  "status.checking": "確認中...",
+  "button.start": "開始",
+  "button.retry": "再試行"
+}
