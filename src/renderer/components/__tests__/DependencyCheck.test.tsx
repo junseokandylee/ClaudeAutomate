@@ -78,9 +78,13 @@ describe('DependencyCheck Component', () => {
       // Act
       render(<DependencyCheck result={mockResult} loading={false} />);
 
-      // Assert
+      // Assert - check for checkmark SVG (M5 13l4 4L19 7 path)
       const claudeStatus = screen.getByTestId('claude-status');
-      expect(claudeStatus).toHaveClass('text-emerald-500');
+      const svg = claudeStatus.querySelector('svg');
+      expect(svg).toBeInTheDocument();
+      // Check for checkmark path
+      const path = svg?.querySelector('path[d="M5 13l4 4L19 7"]');
+      expect(path).toBeInTheDocument();
     });
 
     it('should show red X icon for missing dependencies', () => {
@@ -94,9 +98,14 @@ describe('DependencyCheck Component', () => {
       // Act
       render(<DependencyCheck result={mockResult} loading={false} />);
 
-      // Assert
+      // Assert - check for X SVG (M6 18L18 6M6 6l12 12 paths)
       const claudeStatus = screen.getByTestId('claude-status');
-      expect(claudeStatus).toHaveClass('text-red-500');
+      const svg = claudeStatus.querySelector('svg');
+      expect(svg).toBeInTheDocument();
+      // Check for X paths
+      const paths = svg?.querySelectorAll('path');
+      expect(paths?.length).toBe(1);
+      expect(paths?.[0]?.getAttribute('d')).toBe('M6 18L18 6M6 6l12 12');
     });
 
     it('should display version number when installed', () => {

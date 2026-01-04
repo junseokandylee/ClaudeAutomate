@@ -93,8 +93,22 @@ vi.mock('electron', () => ({
   },
 }));
 
-// Mock fs module
+// Mock fs module (both with and without node: prefix)
 vi.mock('fs', () => ({
+  default: {
+    existsSync: vi.fn(() => false),
+    readFileSync: vi.fn(() => '{}'),
+    writeFileSync: vi.fn(),
+    readdirSync: vi.fn(() => []),
+    mkdirSync: vi.fn(),
+    rmSync: vi.fn(),
+    statSync: vi.fn(() => ({
+      isFile: () => true,
+      isDirectory: () => false,
+      size: 1024,
+      mtime: new Date(),
+    })),
+  },
   existsSync: vi.fn(() => false),
   readFileSync: vi.fn(() => '{}'),
   writeFileSync: vi.fn(),
@@ -109,8 +123,48 @@ vi.mock('fs', () => ({
   })),
 }));
 
-// Mock fs/promises
+vi.mock('node:fs', () => ({
+  default: {
+    existsSync: vi.fn(() => false),
+    readFileSync: vi.fn(() => '{}'),
+    writeFileSync: vi.fn(),
+    readdirSync: vi.fn(() => []),
+    mkdirSync: vi.fn(),
+    rmSync: vi.fn(),
+    statSync: vi.fn(() => ({
+      isFile: () => true,
+      isDirectory: () => false,
+      size: 1024,
+      mtime: new Date(),
+    })),
+  },
+  existsSync: vi.fn(() => false),
+  readFileSync: vi.fn(() => '{}'),
+  writeFileSync: vi.fn(),
+  readdirSync: vi.fn(() => []),
+  mkdirSync: vi.fn(),
+  rmSync: vi.fn(),
+  statSync: vi.fn(() => ({
+    isFile: () => true,
+    isDirectory: () => false,
+    size: 1024,
+    mtime: new Date(),
+  })),
+}));
+
+// Mock fs/promises (both with and without node: prefix)
 vi.mock('fs/promises', () => ({
+  default: {
+    readFile: vi.fn(() => Promise.resolve('{}')),
+    writeFile: vi.fn(() => Promise.resolve()),
+    mkdir: vi.fn(() => Promise.resolve()),
+    readdir: vi.fn(() => Promise.resolve([])),
+    stat: vi.fn(() => Promise.resolve({
+      isFile: () => true,
+      isDirectory: () => false,
+    })),
+    unlink: vi.fn(() => Promise.resolve()),
+  },
   readFile: vi.fn(() => Promise.resolve('{}')),
   writeFile: vi.fn(() => Promise.resolve()),
   mkdir: vi.fn(() => Promise.resolve()),
@@ -119,10 +173,47 @@ vi.mock('fs/promises', () => ({
     isFile: () => true,
     isDirectory: () => false,
   })),
+  unlink: vi.fn(() => Promise.resolve()),
 }));
 
-// Mock child_process module
+vi.mock('node:fs/promises', () => ({
+  default: {
+    readFile: vi.fn(() => Promise.resolve('{}')),
+    writeFile: vi.fn(() => Promise.resolve()),
+    mkdir: vi.fn(() => Promise.resolve()),
+    readdir: vi.fn(() => Promise.resolve([])),
+    stat: vi.fn(() => Promise.resolve({
+      isFile: () => true,
+      isDirectory: () => false,
+    })),
+    unlink: vi.fn(() => Promise.resolve()),
+  },
+  readFile: vi.fn(() => Promise.resolve('{}')),
+  writeFile: vi.fn(() => Promise.resolve()),
+  mkdir: vi.fn(() => Promise.resolve()),
+  readdir: vi.fn(() => Promise.resolve([])),
+  stat: vi.fn(() => Promise.resolve({
+    isFile: () => true,
+    isDirectory: () => false,
+  })),
+  unlink: vi.fn(() => Promise.resolve()),
+}));
+
+// Mock child_process module (both with and without node: prefix)
 vi.mock('child_process', () => ({
+  default: {
+    execSync: vi.fn(() => Buffer.from('{"result": "success"}')),
+    exec: vi.fn((cmd: string, cb: any) => {
+      if (cb) cb(null, 'stdout', 'stderr');
+      return { on: vi.fn(), stderr: { on: vi.fn() } };
+    }),
+    spawn: vi.fn(() => ({
+      on: vi.fn(),
+      stdout: { on: vi.fn() },
+      stderr: { on: vi.fn() },
+      kill: vi.fn(),
+    })),
+  },
   execSync: vi.fn(() => Buffer.from('{"result": "success"}')),
   exec: vi.fn((cmd: string, cb: any) => {
     if (cb) cb(null, 'stdout', 'stderr');
@@ -134,4 +225,94 @@ vi.mock('child_process', () => ({
     stderr: { on: vi.fn() },
     kill: vi.fn(),
   })),
+}));
+
+vi.mock('node:child_process', () => ({
+  default: {
+    execSync: vi.fn(() => Buffer.from('{"result": "success"}')),
+    exec: vi.fn((cmd: string, cb: any) => {
+      if (cb) cb(null, 'stdout', 'stderr');
+      return { on: vi.fn(), stderr: { on: vi.fn() } };
+    }),
+    spawn: vi.fn(() => ({
+      on: vi.fn(),
+      stdout: { on: vi.fn() },
+      stderr: { on: vi.fn() },
+      kill: vi.fn(),
+    })),
+  },
+  execSync: vi.fn(() => Buffer.from('{"result": "success"}')),
+  exec: vi.fn((cmd: string, cb: any) => {
+    if (cb) cb(null, 'stdout', 'stderr');
+    return { on: vi.fn(), stderr: { on: vi.fn() } };
+  }),
+  spawn: vi.fn(() => ({
+    on: vi.fn(),
+    stdout: { on: vi.fn() },
+    stderr: { on: vi.fn() },
+    kill: vi.fn(),
+  })),
+}));
+
+// Mock node:util for promisify
+vi.mock('node:util', () => ({
+  default: {
+    promisify: vi.fn((fn: any) => {
+      return (...args: any[]) => {
+        return new Promise((resolve, reject) => {
+          fn(...args, (error: Error | null, stdout: string, stderr: string) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve({ stdout, stderr });
+            }
+          });
+        });
+      };
+    }),
+  },
+  promisify: vi.fn((fn: any) => {
+    return (...args: any[]) => {
+      return new Promise((resolve, reject) => {
+        fn(...args, (error: Error | null, stdout: string, stderr: string) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve({ stdout, stderr });
+          }
+        });
+      });
+    };
+  }),
+}));
+
+vi.mock('util', () => ({
+  default: {
+    promisify: vi.fn((fn: any) => {
+      return (...args: any[]) => {
+        return new Promise((resolve, reject) => {
+          fn(...args, (error: Error | null, stdout: string, stderr: string) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve({ stdout, stderr });
+            }
+          });
+        });
+      };
+    }),
+  },
+  promisify: vi.fn((fn: any) => {
+    return (...args: any[]) => {
+      return new Promise((resolve, reject) => {
+        fn(...args, (error: Error | null, stdout: string, stderr: string) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve({ stdout, stderr });
+          }
+        });
+      });
+    };
+  }),
 }));

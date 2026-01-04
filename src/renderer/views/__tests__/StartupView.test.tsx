@@ -31,12 +31,10 @@ global.window.electronAPI = mockElectronAPI as any;
 describe('StartupView Component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    vi.runOnlyPendingTimers();
-    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   describe('Initial Render', () => {
@@ -108,16 +106,14 @@ describe('StartupView Component', () => {
       // Act
       render(<StartupView onComplete={onComplete} />);
 
-      // Wait for the async checkDependencies call to complete
-      await waitFor(() => {
-        expect(mockElectronAPI.checkDependencies).toHaveBeenCalled();
-      });
-
-      // Advance timers to trigger the setTimeout callback
-      vi.advanceTimersByTime(1500);
-
-      // Assert
-      expect(onComplete).toHaveBeenCalledTimes(1);
+      // Wait for checkDependencies to be called and the timeout to trigger
+      // Use a longer timeout to account for the 1500ms delay in the component
+      await waitFor(
+        () => {
+          expect(onComplete).toHaveBeenCalledTimes(1);
+        },
+        { timeout: 3000 }
+      );
     });
 
     it('should not call onComplete when dependencies are missing', async () => {

@@ -14,14 +14,77 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import * as childProcess from 'node:child_process';
 
-// Mock dependencies
+// Mock dependencies before importing the service
 vi.mock('electron-log', () => ({
   default: {
     info: vi.fn(),
     error: vi.fn(),
   },
+}));
+
+// Mock node:child_process and node:util together
+const mockExec = vi.fn((
+  _command: string,
+  callback: (error: Error | null, stdout: string, stderr: string) => void
+) => {
+  // Simulate async callback
+  setImmediate(() => {
+    callback(null, '{}', '');
+  });
+  return {} as any;
+});
+
+vi.mock('node:child_process', () => ({
+  default: {
+    exec: mockExec,
+    execSync: vi.fn(() => Buffer.from('{}')),
+    spawn: vi.fn(() => ({
+      on: vi.fn(),
+      stdout: { on: vi.fn() },
+      stderr: { on: vi.fn() },
+      kill: vi.fn(),
+    })),
+  },
+  exec: mockExec,
+  execSync: vi.fn(() => Buffer.from('{}')),
+  spawn: vi.fn(() => ({
+    on: vi.fn(),
+    stdout: { on: vi.fn() },
+    stderr: { on: vi.fn() },
+    kill: vi.fn(),
+  })),
+}));
+
+vi.mock('node:util', () => ({
+  default: {
+    promisify: vi.fn((fn: any) => {
+      return (...args: any[]) => {
+        return new Promise((resolve, reject) => {
+          fn(...args, (error: Error | null, stdout: string, stderr: string) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve({ stdout, stderr });
+            }
+          });
+        });
+      };
+    }),
+  },
+  promisify: vi.fn((fn: any) => {
+    return (...args: any[]) => {
+      return new Promise((resolve, reject) => {
+        fn(...args, (error: Error | null, stdout: string, stderr: string) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve({ stdout, stderr });
+          }
+        });
+      });
+    };
+  }),
 }));
 
 // Mock npm audit outputs
@@ -90,26 +153,22 @@ const mockNpmAuditCritical = {
 
 describe('DependencyScanner', () => {
   let scanner: any;
-  let mockExec: ReturnType<typeof vi.fn>;
   const mockProjectRoot = '/test/project';
 
   beforeEach(async () => {
     vi.clearAllMocks();
     vi.useFakeTimers();
 
-    // Set up mock before importing the service
-    mockExec = vi.fn((
+    // Reset mockExec to return default successful result
+    mockExec.mockImplementation((
       _command: string,
       callback: (error: Error | null, stdout: string, stderr: string) => void
     ) => {
-      // Simulate async callback
       setImmediate(() => {
         callback(null, JSON.stringify(mockNpmAuditOutput), '');
       });
       return {} as any;
     });
-
-    vi.spyOn(childProcess, 'exec').mockImplementation(mockExec);
 
     // Dynamic import to get the service after mocking
     const { DependencyScanner } = await import('../dependency-scanner.service');
