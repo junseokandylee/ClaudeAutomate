@@ -33,3 +33,16 @@ export {
   createStatusPoller,
   type StatusChangeEvent,
 } from './spec-status-poller.service';
+
+// Bootstrap Service
+export {
+  checkBootstrap,
+  type DependencyCheckResult,
+  type BootstrapCheckResult,
+} from './bootstrap.service';
+
+// Config Service
+export {
+  ConfigService,
+  type ConfigServiceOptions,
+} from './config.service';

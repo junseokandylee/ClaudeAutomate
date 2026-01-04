@@ -5,7 +5,7 @@
  * Exposes typed API for Bootstrap, SPEC, Session, and Config operations.
  *
  * TAG-001: Context Bridge Setup
- * TAG-002: Bootstrap API
+ * TAG-002: Bootstrap API (Enhanced with detailed status)
  * TAG-003: SPEC API
  * TAG-004: Session API
  * TAG-005: Config API
@@ -14,12 +14,13 @@
 
 import { contextBridge, ipcRenderer } from 'electron';
 import { IPC_CHANNELS } from '../shared/constants';
+import type { BootstrapCheckResult } from '../shared/types';
 
 /**
  * ElectronAPI - Secure bridge for Main ↔ Renderer communication
  *
  * Provides typed methods for:
- * - Bootstrap: Dependency checking and progress tracking
+ * - Bootstrap: Dependency checking with detailed status (version, path)
  * - SPEC: Scanning and analyzing SPEC files
  * - Session: Managing parallel SPEC execution sessions
  * - Config: Application configuration management
@@ -28,23 +29,30 @@ import { IPC_CHANNELS } from '../shared/constants';
  */
 const electronAPI = {
   // ========================================================================
-  // TAG-002: Bootstrap API (REQ-002)
+  // TAG-002: Bootstrap API (REQ-002, REQ-003)
   // ========================================================================
 
   /**
    * Check if required dependencies are installed
    *
-   * @returns Promise<BootstrapResult> - Status of Claude CLI, MoAI-ADK, and git worktree
+   * Enhanced version that returns detailed status including version and path:
+   * - Claude CLI availability, version, and executable path
+   * - MoAI-ADK installation status and path
+   * - Git worktree support status and version
+   *
+   * @returns Promise<BootstrapCheckResult> - Detailed status of all dependencies
    *
    * @example
    * ```typescript
    * const result = await window.electronAPI.checkDependencies();
-   * if (!result.claude) {
+   * if (!result.claude.installed) {
    *   console.error('Claude CLI not found');
+   * } else {
+   *   console.log(`Claude ${result.claude.version} at ${result.claude.path}`);
    * }
    * ```
    */
-  checkDependencies: (): Promise<any> => {
+  checkDependencies: (): Promise<BootstrapCheckResult> => {
     return ipcRenderer.invoke(IPC_CHANNELS.BOOTSTRAP_CHECK);
   },
 

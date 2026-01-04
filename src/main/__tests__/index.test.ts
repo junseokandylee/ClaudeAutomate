@@ -3,6 +3,12 @@
  *
  * Tests the Electron main process initialization, window creation,
  * and application lifecycle management.
+ *
+ * REQ-004: Sandbox Enforcement (SPEC-SECURITY-001)
+ * - Enable Electron sandbox
+ * - Disable remote module
+ * - Restrict file system access
+ * - Use preload scripts only
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -121,6 +127,70 @@ describe('Main Process - Window Management', () => {
 
       // Assert
       expect(window.on).toHaveBeenCalledWith('closed', expect.any(Function));
+    });
+  });
+
+  describe('SPEC-SECURITY-001 - REQ-004: Sandbox Enforcement', () => {
+    it('should enable renderer process sandboxing', () => {
+      // Act
+      mainModule.createWindow();
+
+      // Assert
+      const call = vi.mocked(BrowserWindow).mock.calls[0][0];
+      expect(call.webPreferences.sandbox).toBe(true);
+    });
+
+    it('should disable remote module for security', () => {
+      // Act
+      mainModule.createWindow();
+
+      // Assert
+      const call = vi.mocked(BrowserWindow).mock.calls[0][0];
+      expect(call.webPreferences.enableRemoteModule).toBe(false);
+    });
+
+    it('should enable web security', () => {
+      // Act
+      mainModule.createWindow();
+
+      // Assert
+      const call = vi.mocked(BrowserWindow).mock.calls[0][0];
+      expect(call.webPreferences.webSecurity).toBe(true);
+    });
+
+    it('should block mixed content (insecure content on secure pages)', () => {
+      // Act
+      mainModule.createWindow();
+
+      // Assert
+      const call = vi.mocked(BrowserWindow).mock.calls[0][0];
+      expect(call.webPreferences.allowRunningInsecureContent).toBe(false);
+    });
+
+    it('should use preload script for secure bridge', () => {
+      // Act
+      mainModule.createWindow();
+
+      // Assert
+      const call = vi.mocked(BrowserWindow).mock.calls[0][0];
+      // Preload script provides the only bridge between main and renderer
+      expect(call.webPreferences.preload).toBeDefined();
+      expect(call.webPreferences.preload).toContain('preload');
+      // With sandbox enabled, preload is the only way to expose APIs
+      expect(call.webPreferences.nodeIntegration).toBe(false);
+      expect(call.webPreferences.contextIsolation).toBe(true);
+    });
+
+    it('should restrict renderer process access to Node.js APIs', () => {
+      // Act
+      mainModule.createWindow();
+
+      // Assert
+      const call = vi.mocked(BrowserWindow).mock.calls[0][0];
+      // Sandbox + no nodeIntegration = no Node.js APIs in renderer
+      expect(call.webPreferences.sandbox).toBe(true);
+      expect(call.webPreferences.nodeIntegration).toBe(false);
+      expect(call.webPreferences.contextIsolation).toBe(true);
     });
   });
 

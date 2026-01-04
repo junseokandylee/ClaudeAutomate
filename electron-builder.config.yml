@@ -1,0 +1,84 @@
+appId: com.moai.claudeautomate
+productName: ClaudeAutomate
+copyright: Copyright © 2025 MoAI-ADK
+directories:
+  buildResources: build
+  output: dist
+
+# Metadata
+metadata:
+  name: ClaudeAutomate
+  version: 2.5.0
+  description: Parallel SPEC execution runner for Claude Code CLI
+
+# Files to include
+files:
+  - dist/**/*
+  - package.json
+
+# macOS configuration
+mac:
+  category: public.app-category.developer-tools
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+    - target: pkg
+      arch:
+        - x64
+        - arm64
+  icon: build/icon.icns
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  gatekeeperAssess: false
+  hardenedRuntime: true
+  notarize:
+    teamId: ${APPLE_TEAM_ID}
+
+# Windows configuration
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - arm64
+  icon: build/icon.ico
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+# Linux configuration
+linux:
+  category: Development
+  target:
+    - target: AppImage
+      arch:
+        - x64
+        - arm64
+    - target: deb
+      arch:
+        - x64
+        - arm64
+    - target: rpm
+      arch:
+        - x64
+        - arm64
+  icon: build/icons
+  maintainer: MoAI-ADK
+  vendor: MoAI-ADK
+  synopsis: Parallel SPEC execution runner
+  description: Parallel SPEC execution runner for Claude Code CLI
+
+# NSIS installer configuration (Windows)
+nsis:
+  oneClick: true
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: ClaudeAutomate
+
+# Publish configuration for auto-updater
+publish:
+  provider: github
+  owner: moai-adk
+  repo: claude-automate

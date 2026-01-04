@@ -4,6 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ClaudeParallelRunner</title>
+
+    <!-- Content Security Policy (REQ-003: SPEC-SECURITY-001) -->
+    <!--
+      Security Policy:
+      - default-src 'self': Restrict all content to same origin by default
+      - script-src 'self': Only load scripts from same origin
+      - style-src 'self' 'unsafe-inline': Allow inline styles for CSS-in-JS
+      - img-src 'self' data: https: Allow images from same origin, data URLs, and HTTPS
+      - font-src 'self' data:: Allow fonts from same origin and data URLs
+      - connect-src 'self' ws://localhost:* wss://localhost:* https://*: Allow WebSocket and HTTPS connections
+      - object-src 'none': Block plugins (Flash, Java, etc.) to prevent XSS
+      - base-uri 'self': Restrict base tag to same origin
+      - form-action 'self': Restrict form submissions to same origin
+      - frame-ancestors 'none': Prevent page from being embedded in frames
+      - upgrade-insecure-requests: Upgrade HTTP to HTTPS
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' ws://localhost:* wss://localhost:* https://*; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;"
+    />
   </head>
   <body>
     <div id="root"></div>

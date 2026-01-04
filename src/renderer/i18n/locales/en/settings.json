@@ -3,11 +3,17 @@
   "general.title": "General",
   "general.language": "Language",
   "general.theme": "Theme",
+  "general.projectRoot": "Worktree Root Directory",
   "advanced.title": "Advanced",
   "advanced.parallelSessions": "Max Parallel Sessions",
+  "advanced.autoCleanup": "Auto Cleanup Worktrees",
   "advanced.timeout": "Timeout",
   "advanced.verbosity": "Verbosity",
   "about.title": "About",
   "about.version": "Version",
-  "about.license": "License"
+  "about.license": "License",
+  "languages.ko": "한국어",
+  "languages.en": "English",
+  "languages.ja": "日本語",
+  "languages.zh": "中文"
 }

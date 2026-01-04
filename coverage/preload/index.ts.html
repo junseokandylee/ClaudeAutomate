@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/265</span>
+                <span class='fraction'>0/273</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/265</span>
+                <span class='fraction'>0/273</span>
             </div>
         
             
@@ -328,7 +328,23 @@
 <a name='L263'></a><a href='#L263'>263</a>
 <a name='L264'></a><a href='#L264'>264</a>
 <a name='L265'></a><a href='#L265'>265</a>
-<a name='L266'></a><a href='#L266'>266</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -600,7 +616,7 @@
 <span class="cstat-no" title="statement not covered" > * Exposes typed API for Bootstrap, SPEC, Session, and Config operations.</span>
 <span class="cstat-no" title="statement not covered" > *</span>
 <span class="cstat-no" title="statement not covered" > * TAG-001: Context Bridge Setup</span>
-<span class="cstat-no" title="statement not covered" > * TAG-002: Bootstrap API</span>
+<span class="cstat-no" title="statement not covered" > * TAG-002: Bootstrap API (Enhanced with detailed status)</span>
 <span class="cstat-no" title="statement not covered" > * TAG-003: SPEC API</span>
 <span class="cstat-no" title="statement not covered" > * TAG-004: Session API</span>
 <span class="cstat-no" title="statement not covered" > * TAG-005: Config API</span>
@@ -609,12 +625,13 @@
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >import { contextBridge, ipcRenderer } from 'electron';</span>
 <span class="cstat-no" title="statement not covered" >import { IPC_CHANNELS } from '../shared/constants';</span>
+<span class="cstat-no" title="statement not covered" >import type { BootstrapCheckResult } from '../shared/types';</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >/**</span>
 <span class="cstat-no" title="statement not covered" > * ElectronAPI - Secure bridge for Main ↔ Renderer communication</span>
 <span class="cstat-no" title="statement not covered" > *</span>
 <span class="cstat-no" title="statement not covered" > * Provides typed methods for:</span>
-<span class="cstat-no" title="statement not covered" > * - Bootstrap: Dependency checking and progress tracking</span>
+<span class="cstat-no" title="statement not covered" > * - Bootstrap: Dependency checking with detailed status (version, path)</span>
 <span class="cstat-no" title="statement not covered" > * - SPEC: Scanning and analyzing SPEC files</span>
 <span class="cstat-no" title="statement not covered" > * - Session: Managing parallel SPEC execution sessions</span>
 <span class="cstat-no" title="statement not covered" > * - Config: Application configuration management</span>
@@ -623,23 +640,30 @@
 <span class="cstat-no" title="statement not covered" > */</span>
 <span class="cstat-no" title="statement not covered" >const electronAPI = {</span>
 <span class="cstat-no" title="statement not covered" >  // ========================================================================</span>
-<span class="cstat-no" title="statement not covered" >  // TAG-002: Bootstrap API (REQ-002)</span>
+<span class="cstat-no" title="statement not covered" >  // TAG-002: Bootstrap API (REQ-002, REQ-003)</span>
 <span class="cstat-no" title="statement not covered" >  // ========================================================================</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  /**</span>
 <span class="cstat-no" title="statement not covered" >   * Check if required dependencies are installed</span>
 <span class="cstat-no" title="statement not covered" >   *</span>
-<span class="cstat-no" title="statement not covered" >   * @returns Promise&lt;BootstrapResult&gt; - Status of Claude CLI, MoAI-ADK, and git worktree</span>
+<span class="cstat-no" title="statement not covered" >   * Enhanced version that returns detailed status including version and path:</span>
+<span class="cstat-no" title="statement not covered" >   * - Claude CLI availability, version, and executable path</span>
+<span class="cstat-no" title="statement not covered" >   * - MoAI-ADK installation status and path</span>
+<span class="cstat-no" title="statement not covered" >   * - Git worktree support status and version</span>
+<span class="cstat-no" title="statement not covered" >   *</span>
+<span class="cstat-no" title="statement not covered" >   * @returns Promise&lt;BootstrapCheckResult&gt; - Detailed status of all dependencies</span>
 <span class="cstat-no" title="statement not covered" >   *</span>
 <span class="cstat-no" title="statement not covered" >   * @example</span>
 <span class="cstat-no" title="statement not covered" >   * ```typescript</span>
 <span class="cstat-no" title="statement not covered" >   * const result = await window.electronAPI.checkDependencies();</span>
-<span class="cstat-no" title="statement not covered" >   * if (!result.claude) {</span>
+<span class="cstat-no" title="statement not covered" >   * if (!result.claude.installed) {</span>
 <span class="cstat-no" title="statement not covered" >   *   console.error('Claude CLI not found');</span>
+<span class="cstat-no" title="statement not covered" >   * } else {</span>
+<span class="cstat-no" title="statement not covered" >   *   console.log(`Claude ${result.claude.version} at ${result.claude.path}`);</span>
 <span class="cstat-no" title="statement not covered" >   * }</span>
 <span class="cstat-no" title="statement not covered" >   * ```</span>
 <span class="cstat-no" title="statement not covered" >   */</span>
-<span class="cstat-no" title="statement not covered" >  checkDependencies: (): Promise&lt;any&gt; =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  checkDependencies: (): Promise&lt;BootstrapCheckResult&gt; =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return ipcRenderer.invoke(IPC_CHANNELS.BOOTSTRAP_CHECK);</span>
 <span class="cstat-no" title="statement not covered" >  },</span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -865,7 +889,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-04T06:11:28.420Z
+                at 2026-01-04T11:42:39.774Z
             </div>
         <script src="../prettify.js"></script>
         <script>
