@@ -95,7 +95,7 @@ vi.mock('electron', () => ({
 
 // Mock fs module with default export
 vi.mock('fs', async (importOriginal) => {
-  const actual = await importOriginal();
+  const actual = await importOriginal<typeof import('fs')>();
   return {
     ...actual,
     existsSync: vi.fn(() => false),
@@ -111,7 +111,7 @@ vi.mock('fs', async (importOriginal) => {
 
 // Mock child_process module with default export
 vi.mock('child_process', async (importOriginal) => {
-  const actual = await importOriginal();
+  const actual = await importOriginal<typeof import('child_process')>();
   return {
     ...actual,
     execSync: vi.fn(),

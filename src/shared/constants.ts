@@ -200,7 +200,7 @@ export const ERROR_CODES = {
   SESSION_CREATE_FAILED: 'E0011',
   SESSION_START_FAILED: 'E0012',
   SESSION_CANCEL_FAILED: 'E0013',
- _SESSION_TIMEOUT: 'E0014',
+ SESSION_TIMEOUT: 'E0014',
   SESSION_WORKTREE_CLEANUP_FAILED: 'E0015',
 
   // Worktree errors (E0021-E0030)
@@ -249,7 +249,7 @@ export const ERROR_MESSAGES: Record<string, string> = {
     'Failed to start session {sessionId}: {reason}',
   [ERROR_CODES.SESSION_CANCEL_FAILED]:
     'Failed to cancel session {sessionId}: {reason}',
-  [ERROR_CODES._SESSION_TIMEOUT]:
+  [ERROR_CODES.SESSION_TIMEOUT]:
     'Session {sessionId} timed out after {duration}ms',
   [ERROR_CODES.SESSION_WORKTREE_CLEANUP_FAILED]:
     'Failed to clean up worktree for session {sessionId}: {reason}',
