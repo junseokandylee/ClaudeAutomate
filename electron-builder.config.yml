@@ -24,17 +24,10 @@ mac:
       arch:
         - x64
         - arm64
-    - target: pkg
-      arch:
-        - x64
-        - arm64
   icon: build/icon.icns
-  entitlements: build/entitlements.mac.plist
-  entitlementsInherit: build/entitlements.mac.plist
-  gatekeeperAssess: false
-  hardenedRuntime: true
-  notarize:
-    teamId: ${APPLE_TEAM_ID}
+  # Code signing disabled for development builds (BUILD-TASK-001)
+  signing: null
+  notarize: false
 
 # Windows configuration
 win:
@@ -45,6 +38,8 @@ win:
         - arm64
   icon: build/icon.ico
   artifactName: ${productName}-${version}-${arch}.${ext}
+  # Code signing disabled for development builds (BUILD-TASK-001)
+  signingHashAlgorithms: []
 
 # Linux configuration
 linux:
