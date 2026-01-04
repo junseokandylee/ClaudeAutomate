@@ -1,0 +1,13 @@
+{
+  "title": "設定",
+  "general.title": "一般",
+  "general.language": "言語",
+  "general.theme": "テーマ",
+  "advanced.title": "高度な設定",
+  "advanced.parallelSessions": "最大並列セッション数",
+  "advanced.timeout": "タイムアウト",
+  "advanced.verbosity": "詳細度",
+  "about.title": "について",
+  "about.version": "バージョン",
+  "about.license": "ライセンス"
+}

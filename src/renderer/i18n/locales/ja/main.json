@@ -1,0 +1,17 @@
+{
+  "terminal.title": "ターミナル",
+  "terminal.output": "出力",
+  "terminal.clear": "クリア",
+  "specs.title": "SPECリスト",
+  "specs.scan": "SPECスキャン",
+  "specs.execute": "実行",
+  "specs.dependency": "依存関係",
+  "sessions.title": "セッション",
+  "sessions.active": "アクティブセッション",
+  "sessions.completed": "完了セッション",
+  "sessions.failed": "失敗セッション",
+  "waves.title": "実行ウェーブ",
+  "waves.current": "現在のウェーブ",
+  "waves.total": "総ウェーブ数",
+  "waves.parallelism": "並列性"
+}

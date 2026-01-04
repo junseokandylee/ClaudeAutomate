@@ -1,0 +1,14 @@
+{
+  "confirm.title": "確認",
+  "confirm.message": "続行しますか？",
+  "confirm.yes": "はい",
+  "confirm.no": "いいえ",
+  "cancel.title": "キャンセル確認",
+  "cancel.message": "キャンセルしてもよろしいですか？",
+  "cancel.proceed": "続行",
+  "cancel.back": "戻る",
+  "error.title": "エラー",
+  "error.message": "エラーが発生しました",
+  "error.details": "詳細",
+  "error.dismiss": "閉じる"
+}

@@ -1,0 +1,14 @@
+{
+  "confirm.title": "확인",
+  "confirm.message": "계속하시겠습니까?",
+  "confirm.yes": "예",
+  "confirm.no": "아니오",
+  "cancel.title": "취소 확인",
+  "cancel.message": "작업을 취소하시겠습니까?",
+  "cancel.proceed": "계속",
+  "cancel.back": "돌아가기",
+  "error.title": "오류",
+  "error.message": "오류가 발생했습니다",
+  "error.details": "세부 정보",
+  "error.dismiss": "닫기"
+}

@@ -1,0 +1,15 @@
+{
+  "title": "ClaudeParallelRunner Startup",
+  "subtitle": "MoAI-ADK SPEC Parallel Execution Runner",
+  "dependencies.title": "Dependency Check",
+  "dependencies.checking": "Checking dependencies...",
+  "dependencies.claude": "Claude Code CLI",
+  "dependencies.moaiAdk": "MoAI-ADK Framework",
+  "dependencies.moaiWorktree": "Git Worktree Support",
+  "dependencies.allReady": "All dependencies are ready",
+  "status.ready": "Ready to Start",
+  "status.notReady": "Not Ready",
+  "status.checking": "Checking...",
+  "button.start": "Get Started",
+  "button.retry": "Retry"
+}

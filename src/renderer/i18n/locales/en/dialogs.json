@@ -1,0 +1,14 @@
+{
+  "confirm.title": "Confirm",
+  "confirm.message": "Do you want to continue?",
+  "confirm.yes": "Yes",
+  "confirm.no": "No",
+  "cancel.title": "Cancel Confirmation",
+  "cancel.message": "Are you sure you want to cancel?",
+  "cancel.proceed": "Proceed",
+  "cancel.back": "Go Back",
+  "error.title": "Error",
+  "error.message": "An error occurred",
+  "error.details": "Details",
+  "error.dismiss": "Dismiss"
+}

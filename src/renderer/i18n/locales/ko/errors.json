@@ -1,0 +1,14 @@
+{
+  "bootstrap.claudeNotFound": "Claude Code CLI를 찾을 수 없습니다",
+  "bootstrap.moaiAdkNotFound": "MoAI-ADK 프레임워크를 찾을 수 없습니다",
+  "bootstrap.worktreeNotSupported": "Git worktree가 지원되지 않습니다",
+  "session.createFailed": "세션 생성 실패",
+  "session.startFailed": "세션 시작 실패",
+  "session.cancelFailed": "세션 취소 실패",
+  "worktree.createFailed": "Worktree 생성 실패",
+  "worktree.removeFailed": "Worktree 제거 실패",
+  "config.invalidPath": "잘못된 구성 경로",
+  "config.invalidValue": "잘못된 구성 값",
+  "analysis.parseFailed": "SPEC 파싱 실패",
+  "analysis.dependencyCycle": "종속성 순환 감지됨"
+}

@@ -1,0 +1,14 @@
+{
+  "bootstrap.claudeNotFound": "Claude Code CLIが見つかりません",
+  "bootstrap.moaiAdkNotFound": "MoAI-ADKフレームワークが見つかりません",
+  "bootstrap.worktreeNotSupported": "Git worktreeがサポートされていません",
+  "session.createFailed": "セッションの作成に失敗しました",
+  "session.startFailed": "セッションの開始に失敗しました",
+  "session.cancelFailed": "セッションのキャンセルに失敗しました",
+  "worktree.createFailed": "worktreeの作成に失敗しました",
+  "worktree.removeFailed": "worktreeの削除に失敗しました",
+  "config.invalidPath": "無効な設定パス",
+  "config.invalidValue": "無効な設定値",
+  "analysis.parseFailed": "SPECの解析に失敗しました",
+  "analysis.dependencyCycle": "依存関係のサイクルが検出されました"
+}

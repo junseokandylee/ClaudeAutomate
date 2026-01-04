@@ -1,0 +1,15 @@
+{
+  "title": "ClaudeParallelRunner启动",
+  "subtitle": "MoAI-ADK SPEC并行执行运行器",
+  "dependencies.title": "依赖检查",
+  "dependencies.checking": "检查依赖中...",
+  "dependencies.claude": "Claude Code CLI",
+  "dependencies.moaiAdk": "MoAI-ADK框架",
+  "dependencies.moaiWorktree": "Git Worktree支持",
+  "dependencies.allReady": "所有依赖已准备就绪",
+  "status.ready": "准备就绪",
+  "status.notReady": "未就绪",
+  "status.checking": "检查中...",
+  "button.start": "开始",
+  "button.retry": "重试"
+}

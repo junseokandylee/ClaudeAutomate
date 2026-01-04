@@ -1,0 +1,17 @@
+{
+  "terminal.title": "터미널",
+  "terminal.output": "출력",
+  "terminal.clear": "지우기",
+  "specs.title": "SPEC 목록",
+  "specs.scan": "SPEC 스캔",
+  "specs.execute": "실행",
+  "specs.dependency": "종속성",
+  "sessions.title": "세션",
+  "sessions.active": "활성 세션",
+  "sessions.completed": "완료된 세션",
+  "sessions.failed": "실패한 세션",
+  "waves.title": "실행 웨이브",
+  "waves.current": "현재 웨이브",
+  "waves.total": "총 웨이브",
+  "waves.parallelism": "병렬성"
+}

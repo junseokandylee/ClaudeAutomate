@@ -1,0 +1,14 @@
+{
+  "bootstrap.claudeNotFound": "Claude Code CLI not found",
+  "bootstrap.moaiAdkNotFound": "MoAI-ADK framework not found",
+  "bootstrap.worktreeNotSupported": "Git worktree not supported",
+  "session.createFailed": "Failed to create session",
+  "session.startFailed": "Failed to start session",
+  "session.cancelFailed": "Failed to cancel session",
+  "worktree.createFailed": "Failed to create worktree",
+  "worktree.removeFailed": "Failed to remove worktree",
+  "config.invalidPath": "Invalid configuration path",
+  "config.invalidValue": "Invalid configuration value",
+  "analysis.parseFailed": "Failed to parse SPEC",
+  "analysis.dependencyCycle": "Dependency cycle detected"
+}

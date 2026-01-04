@@ -1,0 +1,17 @@
+{
+  "app.title": "ClaudeParallelRunner",
+  "app.description": "Parallel SPEC Execution Runner",
+  "actions.start": "Start",
+  "actions.stop": "Stop",
+  "actions.retry": "Retry",
+  "actions.cancel": "Cancel",
+  "actions.save": "Save",
+  "actions.load": "Load",
+  "actions.refresh": "Refresh",
+  "status.pending": "Pending",
+  "status.running": "Running",
+  "status.completed": "Completed",
+  "status.failed": "Failed",
+  "status.idle": "Idle",
+  "status.cancelled": "Cancelled"
+}

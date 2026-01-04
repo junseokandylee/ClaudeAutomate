@@ -1,0 +1,14 @@
+{
+  "confirm.title": "确认",
+  "confirm.message": "是否继续？",
+  "confirm.yes": "是",
+  "confirm.no": "否",
+  "cancel.title": "取消确认",
+  "cancel.message": "确定要取消吗？",
+  "cancel.proceed": "继续",
+  "cancel.back": "返回",
+  "error.title": "错误",
+  "error.message": "发生错误",
+  "error.details": "详细信息",
+  "error.dismiss": "关闭"
+}

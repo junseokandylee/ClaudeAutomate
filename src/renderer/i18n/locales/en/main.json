@@ -1,0 +1,17 @@
+{
+  "terminal.title": "Terminal",
+  "terminal.output": "Output",
+  "terminal.clear": "Clear",
+  "specs.title": "SPEC List",
+  "specs.scan": "Scan SPECs",
+  "specs.execute": "Execute",
+  "specs.dependency": "Dependency",
+  "sessions.title": "Sessions",
+  "sessions.active": "Active Sessions",
+  "sessions.completed": "Completed Sessions",
+  "sessions.failed": "Failed Sessions",
+  "waves.title": "Execution Waves",
+  "waves.current": "Current Wave",
+  "waves.total": "Total Waves",
+  "waves.parallelism": "Parallelism"
+}

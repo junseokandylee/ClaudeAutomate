@@ -1,0 +1,17 @@
+{
+  "terminal.title": "终端",
+  "terminal.output": "输出",
+  "terminal.clear": "清除",
+  "specs.title": "SPEC列表",
+  "specs.scan": "扫描SPEC",
+  "specs.execute": "执行",
+  "specs.dependency": "依赖",
+  "sessions.title": "会话",
+  "sessions.active": "活动会话",
+  "sessions.completed": "已完成会话",
+  "sessions.failed": "失败会话",
+  "waves.title": "执行波次",
+  "waves.current": "当前波次",
+  "waves.total": "总波次",
+  "waves.parallelism": "并行度"
+}
