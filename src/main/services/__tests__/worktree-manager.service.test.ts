@@ -7,6 +7,14 @@ import { WorktreeManagerService, createWorktreeManager } from '../worktree-manag
 import { WorktreeError } from '../../../shared/errors';
 import simpleGit, { SimpleGit } from 'simple-git';
 
+// Mock child_process to provide exec function
+vi.mock('child_process', () => ({
+  exec: vi.fn(),
+  default: {
+    exec: vi.fn(),
+  },
+}));
+
 // Mock simple-git
 vi.mock('simple-git', () => ({
   default: vi.fn(() => ({

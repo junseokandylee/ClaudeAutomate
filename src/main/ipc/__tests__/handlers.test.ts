@@ -8,13 +8,21 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 // Mock modules BEFORE importing
 vi.mock('fs', () => ({
-  existsSync: vi.fn(),
-  readFileSync: vi.fn(),
+  existsSync: vi.fn(() => false),
+  readFileSync: vi.fn(() => '{}'),
   writeFileSync: vi.fn(),
+  default: {
+    existsSync: vi.fn(() => false),
+    readFileSync: vi.fn(() => '{}'),
+    writeFileSync: vi.fn(),
+  },
 }));
 
 vi.mock('child_process', () => ({
   execSync: vi.fn(),
+  default: {
+    execSync: vi.fn(),
+  },
 }));
 
 vi.mock('electron', () => ({
