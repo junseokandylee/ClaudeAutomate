@@ -50,8 +50,12 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    lng: 'en',
     fallbackLng: 'en',
     debug: false,
+
+    ns: ['common', 'startup', 'main', 'settings', 'dialogs', 'errors'],
+    defaultNS: 'common',
 
     interpolation: {
       escapeValue: false,
