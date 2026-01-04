@@ -93,30 +93,45 @@ vi.mock('electron', () => ({
   },
 }));
 
-// Mock fs module with default export
-vi.mock('fs', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('fs')>();
-  return {
-    ...actual,
-    existsSync: vi.fn(() => false),
-    readFileSync: vi.fn(() => '{}'),
-    writeFileSync: vi.fn(),
-    default: {
-      existsSync: vi.fn(() => false),
-      readFileSync: vi.fn(() => '{}'),
-      writeFileSync: vi.fn(),
-    },
-  };
-});
+// Mock fs module
+vi.mock('fs', () => ({
+  existsSync: vi.fn(() => false),
+  readFileSync: vi.fn(() => '{}'),
+  writeFileSync: vi.fn(),
+  readdirSync: vi.fn(() => []),
+  mkdirSync: vi.fn(),
+  rmSync: vi.fn(),
+  statSync: vi.fn(() => ({
+    isFile: () => true,
+    isDirectory: () => false,
+    size: 1024,
+    mtime: new Date(),
+  })),
+}));
 
-// Mock child_process module with default export
-vi.mock('child_process', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('child_process')>();
-  return {
-    ...actual,
-    execSync: vi.fn(),
-    default: {
-      execSync: vi.fn(),
-    },
-  };
-});
+// Mock fs/promises
+vi.mock('fs/promises', () => ({
+  readFile: vi.fn(() => Promise.resolve('{}')),
+  writeFile: vi.fn(() => Promise.resolve()),
+  mkdir: vi.fn(() => Promise.resolve()),
+  readdir: vi.fn(() => Promise.resolve([])),
+  stat: vi.fn(() => Promise.resolve({
+    isFile: () => true,
+    isDirectory: () => false,
+  })),
+}));
+
+// Mock child_process module
+vi.mock('child_process', () => ({
+  execSync: vi.fn(() => Buffer.from('{"result": "success"}')),
+  exec: vi.fn((cmd: string, cb: any) => {
+    if (cb) cb(null, 'stdout', 'stderr');
+    return { on: vi.fn(), stderr: { on: vi.fn() } };
+  }),
+  spawn: vi.fn(() => ({
+    on: vi.fn(),
+    stdout: { on: vi.fn() },
+    stderr: { on: vi.fn() },
+    kill: vi.fn(),
+  })),
+}));

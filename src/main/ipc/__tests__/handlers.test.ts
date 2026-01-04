@@ -6,38 +6,7 @@
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-// Mock modules BEFORE importing
-vi.mock('fs', () => ({
-  existsSync: vi.fn(() => false),
-  readFileSync: vi.fn(() => '{}'),
-  writeFileSync: vi.fn(),
-  default: {
-    existsSync: vi.fn(() => false),
-    readFileSync: vi.fn(() => '{}'),
-    writeFileSync: vi.fn(),
-  },
-}));
-
-vi.mock('child_process', () => ({
-  execSync: vi.fn(),
-  default: {
-    execSync: vi.fn(),
-  },
-}));
-
-vi.mock('electron', () => ({
-  app: {
-    getPath: vi.fn((key: string) => {
-      const paths: Record<string, string> = {
-        userData: '/tmp/test-userdata',
-        home: '/tmp/test-home',
-      };
-      return paths[key] || '/tmp/test';
-    }),
-  },
-}));
-
-// Import after mocking
+// Import after global mocks from setup.ts
 import {
   handleBootstrapCheck,
   handleConfigGet,

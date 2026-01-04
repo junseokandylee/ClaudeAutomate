@@ -12,11 +12,14 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
-// Mock fs module for this test suite
-vi.mock('fs', () => ({
-  readFileSync: vi.fn((path: string) => {
-    if (path.includes('index.css')) {
-      return `/**
+describe('Renderer Foundation - REQ-004: Global Styles', () => {
+  let cssContent: string;
+
+  beforeEach(() => {
+    // Override readFileSync mock for this test
+    vi.mocked(readFileSync).mockImplementation((path: string) => {
+      if (typeof path === 'string' && path.includes('index.css')) {
+        return `/**
  * Global Styles
  */
 
@@ -43,15 +46,10 @@ vi.mock('fs', () => ({
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }`;
-    }
-    return '{}';
-  }),
-}));
+      }
+      return '{}';
+    });
 
-describe('Renderer Foundation - REQ-004: Global Styles', () => {
-  let cssContent: string;
-
-  beforeEach(() => {
     const cssPath = resolve(__dirname, '../index.css');
     cssContent = readFileSync(cssPath, 'utf-8') as string;
   });

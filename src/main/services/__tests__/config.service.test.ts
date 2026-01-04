@@ -117,29 +117,29 @@ describe('Enhanced ConfigService', () => {
   });
 
   describe('Zod validation on set operations', () => {
-    it('should validate using Zod schema on set', () => {
-      expect(() => {
-        configService.set('maxParallelSessions', 11); // Invalid (> 10)
-      }).toThrow();
+    it('should validate using Zod schema on set', async () => {
+      await expect(async () => {
+        await configService.set('maxParallelSessions', 11); // Invalid (> 10)
+      }).rejects.toThrow();
     });
 
-    it('should validate locale enum on set', () => {
-      expect(() => {
-        configService.set('locale', 'fr' as any); // Invalid locale
-      }).toThrow();
+    it('should validate locale enum on set', async () => {
+      await expect(async () => {
+        await configService.set('locale', 'fr' as any); // Invalid locale
+      }).rejects.toThrow();
     });
 
-    it('should validate type on set', () => {
-      expect(() => {
-        configService.set('maxParallelSessions', '10' as any); // Wrong type
-      }).toThrow();
+    it('should validate type on set', async () => {
+      await expect(async () => {
+        await configService.set('maxParallelSessions', '10' as any); // Wrong type
+      }).rejects.toThrow();
     });
 
-    it('should accept valid values on set', () => {
-      expect(() => {
-        configService.set('maxParallelSessions', 5);
-        configService.set('locale', 'ko');
-        configService.set('autoCleanup', false);
+    it('should accept valid values on set', async () => {
+      await expect(async () => {
+        await configService.set('maxParallelSessions', 5);
+        await configService.set('locale', 'ko');
+        await configService.set('autoCleanup', false);
       }).not.toThrow();
     });
   });

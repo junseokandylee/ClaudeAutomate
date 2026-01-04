@@ -17,23 +17,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { checkBootstrap, type BootstrapCheckResult } from '../bootstrap.service';
 
-// Mock child_process and fs modules at the top level before imports
-vi.mock('child_process', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('child_process')>();
-  return {
-    ...actual,
-    execSync: vi.fn(),
-  };
-});
-
-vi.mock('fs', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('fs')>();
-  return {
-    ...actual,
-    existsSync: vi.fn(),
-  };
-});
-
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';
 
