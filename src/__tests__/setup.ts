@@ -108,6 +108,8 @@ vi.mock('fs', () => ({
       size: 1024,
       mtime: new Date(),
     })),
+    accessSync: vi.fn(),
+    appendFileSync: vi.fn(),
   },
   existsSync: vi.fn(() => false),
   readFileSync: vi.fn(() => '{}'),
@@ -121,6 +123,8 @@ vi.mock('fs', () => ({
     size: 1024,
     mtime: new Date(),
   })),
+  accessSync: vi.fn(),
+  appendFileSync: vi.fn(),
 }));
 
 vi.mock('node:fs', () => ({
@@ -137,6 +141,8 @@ vi.mock('node:fs', () => ({
       size: 1024,
       mtime: new Date(),
     })),
+    accessSync: vi.fn(),
+    appendFileSync: vi.fn(),
   },
   existsSync: vi.fn(() => false),
   readFileSync: vi.fn(() => '{}'),
@@ -150,6 +156,8 @@ vi.mock('node:fs', () => ({
     size: 1024,
     mtime: new Date(),
   })),
+  accessSync: vi.fn(),
+  appendFileSync: vi.fn(),
 }));
 
 // Mock fs/promises (both with and without node: prefix)
@@ -157,6 +165,7 @@ vi.mock('fs/promises', () => ({
   default: {
     readFile: vi.fn(() => Promise.resolve('{}')),
     writeFile: vi.fn(() => Promise.resolve()),
+    appendFile: vi.fn(() => Promise.resolve()),
     mkdir: vi.fn(() => Promise.resolve()),
     readdir: vi.fn(() => Promise.resolve([])),
     stat: vi.fn(() => Promise.resolve({
@@ -164,9 +173,13 @@ vi.mock('fs/promises', () => ({
       isDirectory: () => false,
     })),
     unlink: vi.fn(() => Promise.resolve()),
+    access: vi.fn(() => Promise.resolve()),
+    rm: vi.fn(() => Promise.resolve()),
+    rmdir: vi.fn(() => Promise.resolve()),
   },
   readFile: vi.fn(() => Promise.resolve('{}')),
   writeFile: vi.fn(() => Promise.resolve()),
+  appendFile: vi.fn(() => Promise.resolve()),
   mkdir: vi.fn(() => Promise.resolve()),
   readdir: vi.fn(() => Promise.resolve([])),
   stat: vi.fn(() => Promise.resolve({
@@ -174,12 +187,16 @@ vi.mock('fs/promises', () => ({
     isDirectory: () => false,
   })),
   unlink: vi.fn(() => Promise.resolve()),
+  access: vi.fn(() => Promise.resolve()),
+  rm: vi.fn(() => Promise.resolve()),
+  rmdir: vi.fn(() => Promise.resolve()),
 }));
 
 vi.mock('node:fs/promises', () => ({
   default: {
     readFile: vi.fn(() => Promise.resolve('{}')),
     writeFile: vi.fn(() => Promise.resolve()),
+    appendFile: vi.fn(() => Promise.resolve()),
     mkdir: vi.fn(() => Promise.resolve()),
     readdir: vi.fn(() => Promise.resolve([])),
     stat: vi.fn(() => Promise.resolve({
@@ -187,9 +204,13 @@ vi.mock('node:fs/promises', () => ({
       isDirectory: () => false,
     })),
     unlink: vi.fn(() => Promise.resolve()),
+    access: vi.fn(() => Promise.resolve()),
+    rm: vi.fn(() => Promise.resolve()),
+    rmdir: vi.fn(() => Promise.resolve()),
   },
   readFile: vi.fn(() => Promise.resolve('{}')),
   writeFile: vi.fn(() => Promise.resolve()),
+  appendFile: vi.fn(() => Promise.resolve()),
   mkdir: vi.fn(() => Promise.resolve()),
   readdir: vi.fn(() => Promise.resolve([])),
   stat: vi.fn(() => Promise.resolve({
@@ -197,6 +218,9 @@ vi.mock('node:fs/promises', () => ({
     isDirectory: () => false,
   })),
   unlink: vi.fn(() => Promise.resolve()),
+  access: vi.fn(() => Promise.resolve()),
+  rm: vi.fn(() => Promise.resolve()),
+  rmdir: vi.fn(() => Promise.resolve()),
 }));
 
 // Mock child_process module (both with and without node: prefix)
