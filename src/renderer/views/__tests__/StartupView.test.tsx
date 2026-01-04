@@ -13,7 +13,7 @@
  * - Transitions to MainView when bootstrap passes
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { StartupView } from '../StartupView';
 import type { BootstrapCheckResult } from '@shared/types';
@@ -31,6 +31,12 @@ global.window.electronAPI = mockElectronAPI as any;
 describe('StartupView Component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.runOnlyPendingTimers();
+    vi.useRealTimers();
   });
 
   describe('Initial Render', () => {
@@ -102,10 +108,16 @@ describe('StartupView Component', () => {
       // Act
       render(<StartupView onComplete={onComplete} />);
 
-      // Assert
+      // Wait for the async checkDependencies call to complete
       await waitFor(() => {
-        expect(onComplete).toHaveBeenCalledTimes(1);
+        expect(mockElectronAPI.checkDependencies).toHaveBeenCalled();
       });
+
+      // Advance timers to trigger the setTimeout callback
+      vi.advanceTimersByTime(1500);
+
+      // Assert
+      expect(onComplete).toHaveBeenCalledTimes(1);
     });
 
     it('should not call onComplete when dependencies are missing', async () => {
