@@ -1,0 +1,23 @@
+project:
+  name: ClaudeParallelRunner
+  description: 'Cross-platform desktop application for parallel SPEC implementation using Claude Code CLI'
+  type: 'Desktop Application'
+  version: '2.5'
+  locale: en_US
+  created_at: '2026-01-04T08:24:26.615262Z'
+  initialized: 'true'
+
+  # Tech Stack
+  framework: 'Electron 28+'
+  language: 'TypeScript 5.x'
+  ui_framework: 'React 18'
+  styling: 'Tailwind CSS + shadcn/ui + Framer Motion'
+
+  # Platforms
+  platforms:
+    - Windows
+    - macOS
+    - Linux
+
+github:
+  profile_name: 'junseokandylee'
