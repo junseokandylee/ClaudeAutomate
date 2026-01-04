@@ -7,8 +7,8 @@
  * @module spec-scanner.service
  */
 
-import { glob } from 'glob';
-import { readFile } from 'fs/promises';
+import { readFile, readdir } from 'fs/promises';
+import { join } from 'path';
 import type { SpecInfo } from '../../shared/types';
 
 /**
@@ -50,19 +50,50 @@ function parseFrontmatter(content: string): SpecFrontmatter {
 
   // Simple YAML parser for key-value pairs
   const lines = yamlContent.split('\n');
-  for (const line of lines) {
+  let currentArrayKey: string | null = null;
+  const currentArray: string[] = [];
+
+  for (let line of lines) {
+    line = line.trim();
+
+    // Skip empty lines and comments
+    if (!line || line.startsWith('#')) {
+      continue;
+    }
+
+    // Check if we're in an array context
+    if (currentArrayKey) {
+      if (line.startsWith('- ')) {
+        // Array item
+        currentArray.push(line.slice(2).trim().replace(/^['"]|['"]$/g, ''));
+        continue;
+      } else {
+        // End of array
+        data[currentArrayKey] = currentArray;
+        currentArrayKey = null;
+        currentArray.length = 0;
+      }
+    }
+
     const colonIndex = line.indexOf(':');
     if (colonIndex > 0) {
       const key = line.slice(0, colonIndex).trim();
       const value = line.slice(colonIndex + 1).trim();
 
+      // Check if this starts an array
+      if (value === '') {
+        // Next lines will be array items
+        currentArrayKey = key;
+        continue;
+      }
+
       // Parse values
       if (value.startsWith('[') && value.endsWith(']')) {
-        // Array value
+        // Inline array value
         const arrayContent = value.slice(1, -1);
         data[key] = arrayContent
           .split(',')
-          .map((item) => item.trim())
+          .map((item) => item.trim().replace(/^['"]|['"]$/g, ''))
           .filter((item) => item.length > 0);
       } else if (value === 'true') {
         data[key] = true;
@@ -76,6 +107,11 @@ function parseFrontmatter(content: string): SpecFrontmatter {
         data[key] = value;
       }
     }
+  }
+
+  // Don't forget to save the last array if file ends with it
+  if (currentArrayKey && currentArray.length > 0) {
+    data[currentArrayKey] = currentArray;
   }
 
   return data;
@@ -114,10 +150,32 @@ function extractTitleFromContent(content: string): string {
  * ```
  */
 export async function scanSpecs(projectPath: string): Promise<SpecInfo[]> {
-  // Find all spec.md files in .moai/specs/ subdirectories
-  const specPaths = await glob(`${projectPath}/.moai/specs/*/spec.md`, {
-    windowsPathsNoEscape: true,
-  });
+  const specsDir = join(projectPath, '.moai', 'specs');
+
+  let specDirs: string[];
+
+  try {
+    specDirs = await readdir(specsDir);
+  } catch (error) {
+    // Directory doesn't exist or is not readable
+    return [];
+  }
+
+  // Filter to only directories and check for spec.md
+  const specPaths: string[] = [];
+
+  for (const dir of specDirs) {
+    const specPath = join(specsDir, dir, 'spec.md');
+
+    try {
+      // Check if spec.md exists by attempting to read it
+      await readFile(specPath, 'utf-8');
+      specPaths.push(specPath);
+    } catch {
+      // spec.md doesn't exist in this directory, skip it
+      continue;
+    }
+  }
 
   if (specPaths.length === 0) {
     return [];
