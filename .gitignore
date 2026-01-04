@@ -23,6 +23,7 @@ release/
 # Build Artifacts
 # ---------------------------------------------
 build/
+!tests/build/
 dist/
 *.egg-info/
 *.egg
